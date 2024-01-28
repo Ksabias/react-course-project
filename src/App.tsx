@@ -1,20 +1,18 @@
-import { LoginProvider } from "components/Test/InputContext/InputContext";
-import LoginPage from "components/Test/LoginPage/LoginPage";
-import Test from "components/Test/Test";
+import { LoginProvider } from "context/InputContext/InputContext";
+import LoginPage from "pages/LoginPage/LoginPage";
+import MenuPage from "pages/MenuPage/MenuPage";
 import { Route, Routes } from "react-router-dom";
+import "./styles/globals.css";
 
 const App = () => {
   return (
     <>
       <LoginProvider>
-        <div>
-          <LoginPage />
-        </div>
+        <Routes>
+          <Route path="/" element={<LoginPage />}></Route>
+          <Route path="/menu" element={<MenuPage />}></Route>
+        </Routes>
       </LoginProvider>
-
-      <Routes>
-        <Route path="/test" element={<Test />}></Route>
-      </Routes>
     </>
   );
 };

@@ -1,0 +1,50 @@
+.Menu {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.MenuItem {
+  display: flex;
+
+  &.Sold {
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }
+
+  & + .MenuItem {
+    margin-top: 15px;
+  }
+}
+
+img {
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+.ItemInfo {
+  width: 100%;
+}
+
+.ItemTitle {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.ItemIngredients {
+  margin-bottom: 70px;
+  font-size: 18px;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.ItemIsAvailable {
+  font-size: 18px;
+}
+
+.ButtonWrapper {
+  display: flex;
+  align-items: flex-end;
+}

@@ -1,16 +1,22 @@
 import React from "react";
-import { useLogin } from "../InputContext/InputContext";
+import { useLogin } from "../../context/InputContext/InputContext";
 import "./LoginPage.scss";
+import Default from "layouts/Default/Default";
+import { useDispatch } from "react-redux";
+import { setAuthStatus } from "../../redux/slices/auth";
 
 const LoginPage: React.FC = () => {
   const { username, setUserName } = useLogin();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     console.log("Username:", username);
+    localStorage.setItem("username", username);
+    dispatch(setAuthStatus(true));
   };
 
   return (
-    <div>
+    <Default>
       <h2>The best pizza</h2>
 
       <h3>Straight out of the oven, straight to you.</h3>
@@ -30,7 +36,7 @@ const LoginPage: React.FC = () => {
           Login
         </button>
       </form>
-    </div>
+    </Default>
   );
 };
 
