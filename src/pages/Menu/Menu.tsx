@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./MenuPage.scss";
+import "./Menu.scss";
 import Default from "layouts/Default/Default";
+import { useDispatch } from "react-redux";
+import { CartItem, addToCart } from "../../redux/slices/cartSlice";
 
 export interface MenuItem {
   id: number;
@@ -11,7 +13,8 @@ export interface MenuItem {
   ingredients: string[];
 }
 
-const MenuPage: React.FC = () => {
+const Menu: React.FC = () => {
+  const dispatch = useDispatch();
   const [menu, setMenu] = useState<MenuItem[] | []>([]);
 
   useEffect(() => {
@@ -60,7 +63,12 @@ const MenuPage: React.FC = () => {
 
             {!item.soldOut && (
               <div className="ButtonWrapper">
-                <button className="Add">Add to cart</button>
+                <button
+                  className="Add"
+                  onClick={() => dispatch(addToCart(item as CartItem))}
+                >
+                  Add to cart
+                </button>
               </div>
             )}
           </div>
@@ -70,4 +78,4 @@ const MenuPage: React.FC = () => {
   );
 };
 
-export default MenuPage;
+export default Menu;

@@ -2,14 +2,33 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Header.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
+import { CartItem } from "redux/slices/cartSlice";
+import CartIcon from "components/icons/CartIcon";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const headerRef = useRef(null as any);
 
   const [isShrunk, setShrunk] = useState<boolean>(false);
   const [username, setUsername] = useState<string | null>(null);
+  const [cartLength, setCartLength] = useState(0);
+  const { items: products } = useSelector((state: RootState) => state.cart);
 
   const authData = useSelector((state: RootState) => state.auth);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const cart: CartItem[] =
+      typeof localStorage !== "undefined"
+        ? JSON.parse(localStorage.getItem("cart") as string) ?? products
+        : products;
+    const amount = cart.reduce((accum, current) => accum + current.qty, 0);
+
+    if (cart) {
+      setCartLength(amount);
+    }
+  }, [products]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,6 +62,14 @@ const Header = () => {
               <div className="UserName">{username}</div>
             </div>
           )}
+
+          <div className="Cart" onClick={() => navigate("/cart")}>
+            <CartIcon />
+
+            {cartLength > 0 && (
+              <div className="Count">{cartLength > 99 ? "99" : cartLength}</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

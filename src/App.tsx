@@ -1,6 +1,7 @@
 import { LoginProvider } from "context/InputContext/InputContext";
-import LoginPage from "pages/LoginPage/LoginPage";
-import MenuPage from "pages/MenuPage/MenuPage";
+import Login from "pages/Login/Login";
+import Menu from "pages/Menu/Menu";
+import Cart from "pages/Cart/Cart";
 import { Route, Routes } from "react-router-dom";
 import "./styles/globals.css";
 
@@ -9,8 +10,9 @@ const App = () => {
     <>
       <LoginProvider>
         <Routes>
-          <Route path="/" element={<LoginPage />}></Route>
-          <Route path="/menu" element={<MenuPage />}></Route>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/menu" element={<Menu />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
         </Routes>
       </LoginProvider>
     </>

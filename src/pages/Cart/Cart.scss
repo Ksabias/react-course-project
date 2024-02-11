@@ -1,0 +1,69 @@
+@import "../../assets/styles/variables.scss";
+
+.Cart {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.BackToMenu {
+  color: $color-blue;
+  cursor: pointer;
+
+  svg {
+    margin-right: 5px;
+    transform: rotate(180deg);
+  }
+
+  path {
+    fill: $color-blue;
+  }
+}
+
+.CartItem {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px 0;
+
+  & + .CartItem {
+    margin-top: 0;
+    border-top: 1px solid #000000;
+  }
+
+  .Price {
+    margin-right: 50px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .Buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  .Button {
+    width: 40px;
+    height: 40px;
+    margin-top: 0;
+    border-radius: 15px;
+  }
+
+  .Quantity {
+    margin: 0 20px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.Empty {
+  margin-top: 20px;
+  font-size: 30px;
+}
+
+.Delete {
+  margin-top: 0;
+  margin-left: 50px;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
