@@ -1,63 +1,47 @@
 import React from "react";
-import { Noop, RefCallBack } from "react-hook-form";
+import { Noop, RefCallBack, useController } from "react-hook-form";
 import "./BaseInput.scss";
 
 export interface InputProps {
+  control?: any;
   name: string;
-  value: string | number | boolean;
+  value?: string | number | boolean;
   placeholder?: string;
   ref?: RefCallBack;
   type?: "text" | "email" | "number" | "checkbox";
-  onChange: (...event: any[]) => void;
+  onChange?: (...event: any[]) => void;
   error?: string;
   onBlur?: Noop;
 }
 
 const BaseInput: React.FC<InputProps> = ({
-  name,
-  value,
   placeholder,
+  type,
   onChange,
-  error,
-  type = "text",
-  ref,
   onBlur,
+  ...props
 }) => {
+  const { field } = useController(props);
+
   return (
     <div className="BaseInput">
-      <label>{placeholder}</label>
+      <label htmlFor={field.name}>{placeholder}</label>
 
       {type !== "checkbox" ? (
-        <input
-          className={error ? "Error" : "123"}
-          id={name}
-          type={type}
-          placeholder={placeholder}
-          value={value as any}
-          onChange={onChange}
-          name={name}
-          ref={ref}
-          onBlur={onBlur}
-        />
+        <input id={field.name} type={type} {...field} />
       ) : (
         <div className="CheckboxContainer">
           <input
+            id={field.name}
             type="checkbox"
             className="CustomCheckbox"
-            id={name}
-            placeholder={placeholder}
-            value={value as any}
+            {...field}
             onChange={onChange}
-            name={name}
-            ref={ref}
-            onBlur={onBlur}
           />
 
-          <label htmlFor={name}></label>
+          <label id={field.name} htmlFor={field.name}></label>
         </div>
       )}
-
-      {error && <p>{error}</p>}
     </div>
   );
 };

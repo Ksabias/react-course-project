@@ -21,7 +21,7 @@ const validationSchema = yup.object().shape({
 type TForm = yup.InferType<typeof validationSchema>;
 
 const Order: React.FC = () => {
-  const { register, handleSubmit, formState, reset, control } = useForm({
+  const { handleSubmit, reset, control, setValue } = useForm({
     defaultValues: {
       firstName: localStorage.getItem("username") || "",
       phone: "",
@@ -37,6 +37,8 @@ const Order: React.FC = () => {
   const onSubmit = (data: TForm) => {
     console.log(data);
     console.log("Total: " + prioritized ? total + 8 : total);
+
+    reset();
   };
 
   return (
@@ -46,50 +48,35 @@ const Order: React.FC = () => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="Control">
-            <Controller
+            <BaseInput
+              control={control}
               name="firstName"
-              control={control}
-              render={({ field }) => (
-                <BaseInput {...field} placeholder="First Name" />
-              )}
+              placeholder="First Name"
             />
           </div>
 
           <div className="Control">
-            <Controller
+            <BaseInput
+              control={control}
               name="phone"
-              control={control}
-              render={({ field }) => (
-                <BaseInput {...field} placeholder="Phone number" />
-              )}
+              placeholder="Phone number"
             />
           </div>
 
           <div className="Control">
-            <Controller
-              name="address"
-              control={control}
-              render={({ field }) => (
-                <BaseInput {...field} placeholder="Address" />
-              )}
-            />
+            <BaseInput name="address" control={control} placeholder="Address" />
           </div>
 
           <div className="Control ControlCheckbox">
-            <Controller
+            <BaseInput
               name="prioritized"
               control={control}
-              render={({ field }) => (
-                <BaseInput
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    setPrioritized(e.target.checked);
-                  }}
-                  type="checkbox"
-                  placeholder="Want to yo give your order priority?"
-                />
-              )}
+              onChange={(e) => {
+                setValue("prioritized", e.target.checked);
+                setPrioritized(e.target.checked);
+              }}
+              type="checkbox"
+              placeholder="Want to yo give your order priority?"
             />
           </div>
 
