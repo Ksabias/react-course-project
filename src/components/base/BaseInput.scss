@@ -10,6 +10,13 @@
   }
 
   input {
+    display: block;
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+    padding: 0 15px;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 5px;
     margin-top: 0;
   }
 
@@ -18,7 +25,7 @@
 
     label {
       width: 16px;
-      height: 20px;
+      height: 16px;
       margin-right: 0;
       cursor: pointer;
 
@@ -26,7 +33,7 @@
         content: "";
         display: inline-block;
         width: 16px;
-        height: 20px;
+        height: 16px;
         border: 2px solid $color-main;
         border-radius: 3px;
         vertical-align: middle;
@@ -37,13 +44,19 @@
   .CustomCheckbox {
     display: none;
 
-    &[value="true"] + label:after {
+    &:checked + label:after {
       content: "\2713";
       font-size: 16px;
       color: $color-main;
       position: absolute;
       top: 0;
-      left: 2.5px;
+      left: 4px;
+    }
+  }
+
+  &.Invalid {
+    input {
+      border-color: $color-red;
     }
   }
 }

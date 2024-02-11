@@ -21,10 +21,10 @@ const BaseInput: React.FC<InputProps> = ({
   onBlur,
   ...props
 }) => {
-  const { field } = useController(props);
+  const { field, fieldState } = useController(props);
 
   return (
-    <div className="BaseInput">
+    <div className={`BaseInput ${fieldState.invalid ? "Invalid" : "Valid"}`}>
       <label htmlFor={field.name}>{placeholder}</label>
 
       {type !== "checkbox" ? (
