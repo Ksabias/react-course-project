@@ -1,0 +1,17 @@
+.Order {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .Control {
+    width: 100%;
+
+    + .Control {
+      margin-top: 20px;
+    }
+  }
+
+  .ControlCheckbox {
+    max-width: 300px;
+    margin-left: auto;
+  }
+}

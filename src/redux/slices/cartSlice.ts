@@ -12,15 +12,27 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[];
+  total: number;
   isLoading: boolean;
   isError: boolean;
 }
+
+const cart: CartItem[] =
+  typeof localStorage !== "undefined"
+    ? JSON.parse(localStorage.getItem("cart") as string) ?? []
+    : [];
+
+const countTotal = (items: CartItem[]) =>
+  items.reduce((prev, curr) => {
+    return prev + curr.unitPrice * curr.qty;
+  }, 0);
 
 const initialState: CartState = {
   items:
     typeof localStorage !== "undefined"
       ? JSON.parse(localStorage.getItem("cart") as string) ?? []
       : [],
+  total: countTotal(cart),
   isLoading: false,
   isError: false,
 };
@@ -38,10 +50,14 @@ export const cartSlice = createSlice({
         state.items.push({ ...action.payload, qty: 1 });
       }
 
+      state.total = countTotal(state.items);
+
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
     deleteFromCart: (state, action: PayloadAction<CartItem>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
+
+      state.total = countTotal(state.items);
 
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
@@ -57,6 +73,8 @@ export const cartSlice = createSlice({
         }
       }
 
+      state.total = countTotal(state.items);
+
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
     incrementQty: (state, action: PayloadAction<CartItem>) => {
@@ -66,10 +84,13 @@ export const cartSlice = createSlice({
         item.qty = item.qty + 1;
       }
 
+      state.total = countTotal(state.items);
+
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
     cleanCart: (state) => {
       state.items = [];
+      state.total = countTotal(state.items);
       localStorage.removeItem("cart");
     },
   },

@@ -18,7 +18,7 @@ const Cart: React.FC = () => {
   const items = useSelector((state: RootState) => state.cart.items);
 
   const handleOrder = () => {
-    console.log("ORDER");
+    navigate("/order/new");
   };
 
   return (
@@ -41,7 +41,7 @@ const Cart: React.FC = () => {
                   <div className="ItemTitle">{`${item.qty}x ${item.name}`}</div>
                 </div>
 
-                <div className="Price">${item.unitPrice}</div>
+                <div className="Price">${item.unitPrice * item.qty}</div>
 
                 <div className="Buttons">
                   <button
@@ -71,7 +71,7 @@ const Cart: React.FC = () => {
             ))}
 
             <div className="BottomButtons">
-              <button className="Button Order" onClick={() => handleOrder()}>
+              <button className="Button" onClick={() => handleOrder()}>
                 Order pizzas
               </button>
 

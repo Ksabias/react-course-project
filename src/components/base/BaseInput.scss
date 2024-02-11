@@ -1,0 +1,48 @@
+@import "../../assets/styles/variables.scss";
+
+.BaseInput {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  label {
+    margin-right: 25px;
+  }
+
+  input {
+    margin-top: 0;
+  }
+
+  .CheckboxContainer {
+    position: relative;
+
+    label {
+      width: 16px;
+      height: 20px;
+      margin-right: 0;
+
+      &:before {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 20px;
+        border: 2px solid $color-main;
+        border-radius: 3px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .CustomCheckbox {
+    display: none;
+
+    &[value="true"] + label:after {
+      content: "\2713";
+      font-size: 16px;
+      color: $color-main;
+      position: absolute;
+      top: 0;
+      left: 2.5px;
+    }
+  }
+}
