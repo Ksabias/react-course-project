@@ -30,6 +30,10 @@
     border-top: 1px solid #000000;
   }
 
+  &:last-child {
+    border-bottom: 1px solid #000000;
+  }
+
   .Price {
     margin-right: 50px;
     font-size: 20px;
@@ -63,7 +67,27 @@
 .Delete {
   margin-top: 0;
   margin-left: 50px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+.BottomButtons {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+
+  .Button {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    & + .Button {
+      margin-left: 15px;
+    }
+  }
+
+  .Clear {
+    background-color: transparent;
+    border: 1px solid #00000071;
+  }
 }

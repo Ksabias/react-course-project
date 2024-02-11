@@ -7,6 +7,7 @@ import {
   decrementQty,
   deleteFromCart,
   incrementQty,
+  cleanCart,
 } from "../../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { Arrow } from "components/icons/ArrowIcon";
@@ -15,6 +16,10 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const items = useSelector((state: RootState) => state.cart.items);
+
+  const handleOrder = () => {
+    console.log("ORDER");
+  };
 
   return (
     <Default>
@@ -28,40 +33,57 @@ const Cart: React.FC = () => {
           <div className="Empty">Cart is empty</div>
         )}
 
-        {items?.map((item) => (
-          <div className="CartItem" key={item.id}>
-            <div className="ItemInfo">
-              <div className="ItemTitle">{`${item.qty}x ${item.name}`}</div>
-            </div>
+        {items?.length > 0 && (
+          <>
+            {items?.map((item) => (
+              <div className="CartItem" key={item.id}>
+                <div className="ItemInfo">
+                  <div className="ItemTitle">{`${item.qty}x ${item.name}`}</div>
+                </div>
 
-            <div className="Price">${item.unitPrice}</div>
+                <div className="Price">${item.unitPrice}</div>
 
-            <div className="Buttons">
-              <button
-                className="Button Increment"
-                onClick={() => dispatch(incrementQty(item))}
-              >
-                +
+                <div className="Buttons">
+                  <button
+                    className="Button Increment"
+                    onClick={() => dispatch(incrementQty(item))}
+                  >
+                    +
+                  </button>
+
+                  <div className="Quantity">{item.qty}</div>
+
+                  <button
+                    className="Button Decrement"
+                    onClick={() => dispatch(decrementQty(item))}
+                  >
+                    -
+                  </button>
+                </div>
+
+                <button
+                  className="Delete"
+                  onClick={() => dispatch(deleteFromCart(item))}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+
+            <div className="BottomButtons">
+              <button className="Button Order" onClick={() => handleOrder()}>
+                Order pizzas
               </button>
 
-              <div className="Quantity">{item.qty}</div>
-
               <button
-                className="Button Decrement"
-                onClick={() => dispatch(decrementQty(item))}
+                className="Button Clear"
+                onClick={() => dispatch(cleanCart())}
               >
-                -
+                Clear cart
               </button>
             </div>
-
-            <button
-              className="Delete"
-              onClick={() => dispatch(deleteFromCart(item))}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+          </>
+        )}
       </div>
     </Default>
   );
