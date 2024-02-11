@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./Menu.scss";
 import Default from "layouts/Default/Default";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartItem, addToCart } from "../../redux/slices/cartSlice";
+import { getMenuItems } from "../../redux/slices/menuSlice";
+import { RootState } from "redux/store";
+import { UnknownAction } from "@reduxjs/toolkit";
 
 export interface MenuItem {
   id: number;
@@ -15,23 +18,27 @@ export interface MenuItem {
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
-  const [menu, setMenu] = useState<MenuItem[] | []>([]);
+  const {
+    isLoading,
+    isError,
+    items: menu,
+  } = useSelector((state: RootState) => state.menu);
 
   useEffect(() => {
-    const getMenu = async () => {
-      const res = await fetch(
-        "https://react-fast-pizza-api.onrender.com/api/menu"
-      );
-      const { data } = await res.json();
-      setMenu(data);
-    };
-
-    getMenu();
-  }, []);
+    dispatch(getMenuItems() as unknown as UnknownAction);
+  }, [dispatch]);
 
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+
+  if (isError) {
+    return <div>Error occured</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <Default>

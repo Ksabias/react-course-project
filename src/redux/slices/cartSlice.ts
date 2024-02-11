@@ -12,6 +12,8 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[];
+  isLoading: boolean;
+  isError: boolean;
 }
 
 const initialState: CartState = {
@@ -19,6 +21,8 @@ const initialState: CartState = {
     typeof localStorage !== "undefined"
       ? JSON.parse(localStorage.getItem("cart") as string) ?? []
       : [],
+  isLoading: false,
+  isError: false,
 };
 
 export const cartSlice = createSlice({
